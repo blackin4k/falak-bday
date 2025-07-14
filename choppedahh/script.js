@@ -1,68 +1,113 @@
-// Typewriter Effect
-const text = "Happy Birthday Falak 🎉";
-let i = 0;
-const speed = 80;
-function typeWriter() {
-  if (i < text.length) {
-    document.getElementById("typedText").textContent += text.charAt(i);
-    i++;
-    setTimeout(typeWriter, speed);
+document.addEventListener("DOMContentLoaded", () => {
+  const typedText = document.getElementById("typedText");
+  const texts = [
+    "Happy early birthday Falak! 🩷",
+    "You’re iconic. You’re dramatic. You’re unstoppable.",
+    "XO Kitty has nothing on you.",
+    "Hope your day is as chaotic and cute as you."
+  ];
+  let i = 0, j = 0, currentText = "", isDeleting = false;
+
+  function type() {
+    if (i < texts.length) {
+      currentText = texts[i];
+      if (!isDeleting && j <= currentText.length) {
+        typedText.textContent = currentText.slice(0, j++);
+      } else if (isDeleting && j >= 0) {
+        typedText.textContent = currentText.slice(0, j--);
+      }
+
+      if (j === currentText.length + 1) isDeleting = true;
+      if (j === -1) {
+        isDeleting = false;
+        i = (i + 1) % texts.length;
+      }
+    }
+    setTimeout(type, isDeleting ? 50 : 100);
   }
-}
-typeWriter();
+  type();
 
-// Birthday Countdown to Jan 16, 2026
-const targetDate = new Date("January 16, 2026 00:00:00").getTime();
-const timerElement = document.getElementById("timer");
-setInterval(() => {
-  const now = new Date().getTime();
-  const diff = targetDate - now;
-  if (diff <= 0) {
-    timerElement.textContent = "🎉 It's her birthday!";
-    return;
-  }
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-  const minutes = Math.floor((diff / (1000 * 60)) % 60);
-  const seconds = Math.floor((diff / 1000) % 60);
-  timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-}, 1000);
+  // Countdown
+  const timerElement = document.getElementById("timer");
+  const birthday = new Date("2026-01-16T00:00:00").getTime();
+  setInterval(() => {
+    const now = new Date().getTime();
+    const distance = birthday - now;
+    if (distance < 0) {
+      timerElement.textContent = "🎉 It's her birthday! 🎉";
+      return;
+    }
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    timerElement.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+  }, 1000);
 
-// Song Control
-const musicPlayer = document.getElementById("musicPlayer");
-const playPauseBtn = document.getElementById("playPauseBtn");
-const songSelect = document.getElementById("songSelect");
-const nowPlaying = document.getElementById("nowPlaying");
+  // Music Player
+  const musicPlayer = document.getElementById("musicPlayer");
+  const songSelect = document.getElementById("songSelect");
+  const playPauseBtn = document.getElementById("playPauseBtn");
+  const nowPlaying = document.getElementById("nowPlaying");
 
-playPauseBtn.addEventListener("click", () => {
-  if (musicPlayer.paused) {
+  songSelect.addEventListener("change", () => {
+    const selectedSong = songSelect.value;
+    musicPlayer.src = selectedSong;
     musicPlayer.play();
+    nowPlaying.textContent = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
     playPauseBtn.textContent = "⏸ Pause";
-  } else {
-    musicPlayer.pause();
-    playPauseBtn.textContent = "▶️ Play";
+  });
+
+  playPauseBtn.addEventListener("click", () => {
+    if (musicPlayer.paused) {
+      musicPlayer.play();
+      playPauseBtn.textContent = "⏸ Pause";
+    } else {
+      musicPlayer.pause();
+      playPauseBtn.textContent = "▶️ Play";
+    }
+  });
+
+  // Quotes
+  const falakQuotes = [
+    "Coke is my hydration routine 🥤",
+    "I’m tired. (talks for 3 more hours)",
+    "XO Kitty is peak cinema",
+    "I’m not ignoring you, I just hate texting 💅",
+    "Sleep is for the weak, and I am very weak 😴"
+  ];
+  const falakQuoteEl = document.getElementById("falakQuote");
+  falakQuoteEl.textContent = falakQuotes[Math.floor(Math.random() * falakQuotes.length)];
+
+  // Falling bows
+  function createBow() {
+    const bow = document.createElement("img");
+    bow.src = "bow.png";
+    bow.className = "falling-bow";
+    bow.style.left = Math.random() * 100 + "vw";
+    bow.style.animationDuration = 3 + Math.random() * 3 + "s";
+    document.body.appendChild(bow);
+    setTimeout(() => bow.remove(), 6000);
   }
+  setInterval(createBow, 600);
+
+  // Theme Toggle
+  const themeToggle = document.createElement("button");
+  themeToggle.id = "themeToggle";
+  themeToggle.innerText = "🌙";
+  themeToggle.style.position = "fixed";
+  themeToggle.style.top = "10px";
+  themeToggle.style.right = "10px";
+  themeToggle.style.zIndex = "1000";
+  themeToggle.style.fontSize = "20px";
+  themeToggle.style.background = "#ffe6f2";
+  themeToggle.style.border = "none";
+  themeToggle.style.borderRadius = "50%";
+  themeToggle.style.padding = "8px";
+  themeToggle.style.cursor = "pointer";
+  document.body.appendChild(themeToggle);
+
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+  });
 });
-
-songSelect.addEventListener("change", () => {
-  const selected = songSelect.value;
-  musicPlayer.src = selected;
-  musicPlayer.play();
-  playPauseBtn.textContent = "⏸ Pause";
-  nowPlaying.textContent = "Now playing: " + songSelect.options[songSelect.selectedIndex].text;
-});
-
-// Raining bows
-function createBow() {
-  const bow = document.createElement("img");
-  bow.src = "bow.png"; // make sure this file exists
-  bow.classList.add("falling-bow");
-  bow.style.left = Math.random() * 100 + "vw";
-  bow.style.animationDuration = 5 + Math.random() * 3 + "s";
-  document.body.appendChild(bow);
-
-  setTimeout(() => {
-    bow.remove();
-  }, 8000);
-}
-setInterval(createBow, 300);
