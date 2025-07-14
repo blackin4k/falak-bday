@@ -7,25 +7,6 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-<button onclick="toggleDarkMode()" class="glow-button">🌓 Toggle Dark Mode</button>
-
-  <!-- Theme Toggle Button -->
-  <button id="themeToggle" class="glow-button" style="position: fixed; top: 20px; right: 20px; z-index: 999;">
-    🌙 Toggle Theme
-  </button>
-
-  <!-- Raining Bows -->
-  <script>
-    for (let i = 0; i < 30; i++) {
-      const bow = document.createElement('img');
-      bow.src = 'bow-cursor.png';
-      bow.className = 'falling-bow';
-      bow.style.left = Math.random() * 100 + 'vw';
-      bow.style.animationDuration = (Math.random() * 3 + 2) + 's';
-      document.body.appendChild(bow);
-    }
-  </script>
-
   <div class="chopped-note">you are so chopped bro</div>
 
   <div class="container">
@@ -53,76 +34,45 @@
     <p class="now-playing-text" id="nowPlaying">Now playing: Apocalypse — CAS</p>
     <p id="falakQuote" class="quote-box">Loading Falak’s quotes...</p>
 
-    <!-- Other content like chick-cards, bio-card, rating, polaroid-diary, etc. -->
+    <div class="chicks-section">
+      <p class="meter-title">💖 Delulu Meter</p>
+      <div class="delulu-bar"><div class="fill"></div></div>
 
+      <h2>💅 Her Side Chicks</h2>
+      <div class="chick-cards">
+        <!-- Add your chick cards here -->
+        <div class="chick-card"><p class="name">Amith</p><p class="desc">Blocked me for existing 🚫</p></div>
+        <div class="chick-card"><p class="name">Qazi</p><p class="desc">Says ily 34x a day 💌</p></div>
+        <!-- Add more -->
+      </div>
+    </div>
+
+    <div class="bio-card">
+      <h2>💖 Falak, The Main Character</h2>
+      <ul>
+        <li>🧠 Biology genius (but thinks Coke = hydration)</li>
+        <li>🎬 XO Kitty is her TED Talk</li>
+        <li>⚽ “I played once = I'm Messi”</li>
+      </ul>
+      <div class="text-rating">
+        <p>✉️ Replies like: 2 business days</p>
+        <p>📲 Opens stories: 0.002 seconds</p>
+      </div>
+    </div>
+
+    <div class="polaroid-diary">
+      <div class="diary-photo">
+        <img src="her1.jpg" />
+        <span class="caption">her on her delulu arc</span>
+      </div>
+      <div class="diary-photo">
+        <img src="her2.jpg" />
+        <span class="caption">probably ignoring texts</span>
+      </div>
+    </div>
   </div>
 
-  <!-- Scripts -->
-  <script>
-    // === MUSIC ===
-    const musicPlayer = document.getElementById("musicPlayer");
-    const playPauseBtn = document.getElementById("playPauseBtn");
-    const songSelect = document.getElementById("songSelect");
-    const nowPlaying = document.getElementById("nowPlaying");
-
-    let isPlaying = true;
-
-    playPauseBtn.addEventListener("click", () => {
-      if (isPlaying) {
-        musicPlayer.pause();
-        playPauseBtn.textContent = "▶️ Play";
-      } else {
-        musicPlayer.play();
-        playPauseBtn.textContent = "⏸ Pause";
-      }
-      isPlaying = !isPlaying;
-    });
-
-    songSelect.addEventListener("change", () => {
-      const selectedSong = songSelect.value;
-      musicPlayer.src = selectedSong;
-      musicPlayer.play();
-      isPlaying = true;
-      playPauseBtn.textContent = "⏸ Pause";
-      nowPlaying.textContent = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
-    });
-
-    // === THEME TOGGLE ===
-    const themeToggle = document.getElementById("themeToggle");
-    themeToggle.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-    });
-
-    // === TYPEWRITER ===
-    const typedText = document.getElementById("typedText");
-    const message = "Happy Birthday Falak! ✨ You're the drama AND the main character.";
-    let index = 0;
-    function typeWriter() {
-      if (index < message.length) {
-        typedText.textContent += message.charAt(index);
-        index++;
-        setTimeout(typeWriter, 70);
-      }
-    }
-    typeWriter();
-
-    // === COUNTDOWN ===
-    const countdown = document.getElementById("timer");
-    const birthday = new Date("2026-01-16T00:00:00").getTime();
-
-    function updateCountdown() {
-      const now = new Date().getTime();
-      const gap = birthday - now;
-
-      const days = Math.floor(gap / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((gap % (1000 * 60)) / 1000);
-
-      countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-  </script>
+  <!-- Raining bows container (optional) -->
+  <script src="script.js"></script>
 </body>
 </html>
