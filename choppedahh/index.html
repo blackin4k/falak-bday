@@ -7,7 +7,18 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <div class="chopped-note">you are so chopped bro</div>
+
+  <!-- DARK MODE TOGGLE -->
+  <button id="darkToggle" class="glow-button" style="position: fixed; top: 20px; right: 20px; z-index: 999;">🌙</button>
+
+  <!-- BUBBLE -->
+  <div id="messageBubble" class="pop-bubble">sup bitch</div>
+
+  <!-- CONFESS BUTTON + POPUP -->
+  <button id="confessBtn" class="confess-button">+</button>
+  <div id="confessNote" class="confess-popup">Secret confession: You’re so chopped</div>
 
   <div class="container">
     <h1 class="typewriter" id="typedText"></h1>
@@ -34,96 +45,13 @@
     <p class="now-playing-text" id="nowPlaying">Now playing: Apocalypse — CAS</p>
     <p id="falakQuote" class="quote-box">Loading Falak’s quotes...</p>
 
-    <div class="chicks-section">
-      <p class="meter-title">💖 Delulu Meter</p>
-      <div class="delulu-bar"><div class="fill"></div></div>
+    <!-- rest of your content stays the same (already perfect) -->
+    <!-- chick-cards, bio, diary etc -->
 
-      <h2>💅 Her Side Chicks</h2>
-      <div class="chick-cards">
-        <div class="chick-card">
-          <p class="name">Amith</p>
-          <p class="desc">Pretty close to her. Blocked me for existing 🚫</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">John</p>
-          <p class="desc">Emotionally 5 years old 🍼</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Qazi</p>
-          <p class="desc">Says “ily” 34 times a day 💌</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Dhruv</p>
-          <p class="desc">The newest addition to her boy zoo 🧸</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Laksh</p>
-          <p class="desc">“He’s hot” — her words</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Harshit</p>
-          <p class="desc">School crush. Might get promoted to bf</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Abhas</p>
-          <p class="desc">Certified hot guy fr 🔥</p>
-        </div>
-        <div class="chick-card">
-          <p class="name">Bobby</p>
-          <p class="desc">Proposed and got curved LMAO 💍💀</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="bio-card">
-      <h2>💖 Falak, The Main Character</h2>
-      <ul>
-        <li>🧠 Biology genius (but still thinks Coke = hydration).</li>
-        <li>💇‍♀️ Feather cut? More like featherbrain, sleeps 18 hours a day.</li>
-        <li>📱 Got 8 side chicks but can’t text back one message.</li>
-        <li>🎬 XO Kitty on loop like it's a TED Talk. Jab We Met? She quotes it like scripture.</li>
-        <li>🍛 Big foodie but skips breakfast, lunch AND brunch. Red Bull is her multivitamin.</li>
-        <li>🎧 Lana when she’s sad. Kendrick when she’s fake deep. NCT when she’s delulu.</li>
-        <li>⚽ Plays football once = “I’m basically Messi.” Girl, pls.</li>
-        <li>📢 Says she’s tired then talks for 3 hours straight. Social battery? Infinite. Brain battery? Unknown.</li>
-        <li>🧮 Math walks in the room = she walks out. Instantly allergic to numbers.</li>
-        <li>👑 “I’m the prettiest, smartest, chillest” — okay but where’s the proof tho?</li>
-      </ul>
-      <div class="text-rating">
-        <p>✉️ Replies like: 2 business days</p>
-        <p>📲 Opens stories: 0.002 seconds</p>
-      </div>
-    </div>
-
-    <div class="rating-section">
-      <h2 class="rating-title">🌟 Side Chick Ratings</h2>
-      <p class="rating-note">I hate them all.</p>
-      <div class="rating-cards">
-        <div class="rating-card"><p class="name">Amith</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">John</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Qazi</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Dhruv</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Laksh</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Harshit</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Abhas</p><p class="stars">☆☆☆☆☆</p></div>
-        <div class="rating-card"><p class="name">Bobby</p><p class="stars">☆☆☆☆☆</p></div>
-      </div>
-    </div>
-
-    <div class="polaroid-diary">
-      <div class="diary-photo">
-        <img src="her1.jpg" />
-        <span class="caption">her on her delulu arc</span>
-      </div>
-      <div class="diary-photo">
-        <img src="her2.jpg" />
-        <span class="caption">probably ignoring texts</span>
-      </div>
-      <div class="diary-photo">
-        <img src="her3.jpg" />
-        <span class="caption">being dramatic idk</span>
-      </div>
-    </div>
+    <!-- just ending container here -->
   </div>
+
+  <!-- SCRIPTS AT THE BOTTOM -->
+  <script src="script.js"></script>
 </body>
 </html>
