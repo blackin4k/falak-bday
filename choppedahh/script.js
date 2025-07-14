@@ -1,106 +1,102 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const birthday = new Date("2026-01-15T00:00:00").getTime();
-  const timerElement = document.getElementById("timer");
-  const songSelect = document.getElementById("songSelect");
-  const playPauseBtn = document.getElementById("playPauseBtn");
-  const musicPlayer = document.getElementById("musicPlayer");
-  const nowPlaying = document.getElementById("nowPlaying");
-  const falakQuote = document.getElementById("falakQuote");
-  const bubble = document.getElementById("messageBubble");
-  const darkBtn = document.getElementById("darkToggle");
-  const confessBtn = document.getElementById("confessBtn");
-  const confessNote = document.getElementById("confessNote");
+// ========== TYPING EFFECT ==========
+const typedText = document.getElementById("typedText");
+const messages = ["Falak’s Birthday Countdown 🎂", "She’s the main character fr 💅", "Get ready to celebrate 🥳"];
+let index = 0;
+let charIndex = 0;
 
-  // 1. Countdown Timer
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = birthday - now;
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-    timerElement.innerText = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+function type() {
+  if (charIndex < messages[index].length) {
+    typedText.textContent += messages[index][charIndex];
+    charIndex++;
+    setTimeout(type, 80);
+  } else {
+    setTimeout(() => {
+      typedText.textContent = "";
+      charIndex = 0;
+      index = (index + 1) % messages.length;
+      type();
+    }, 1500);
   }
-  setInterval(updateCountdown, 1000);
-  updateCountdown();
+}
+type();
 
-  // 2. Song Selector
-  songSelect.addEventListener("change", () => {
-    const selectedSong = songSelect.value;
-    musicPlayer.src = selectedSong;
-    musicPlayer.play().catch(e => console.warn("Playback failed", e));
-    nowPlaying.innerText = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
-    playPauseBtn.innerText = "⏸ Pause";
-  });
 
-  // 3. Play/Pause Toggle
-  playPauseBtn.addEventListener("click", () => {
-    if (musicPlayer.paused) {
-      musicPlayer.play().catch(e => console.warn("Playback failed", e));
-      playPauseBtn.innerText = "⏸ Pause";
-    } else {
-      musicPlayer.pause();
-      playPauseBtn.innerText = "▶ Play";
-    }
-  });
+// ========== COUNTDOWN TIMER ==========
+function updateCountdown() {
+  const birthday = new Date("January 16, 2026 00:00:00");
+  const now = new Date();
+  const diff = birthday - now;
 
-  // 4. Autoplay Fix
-  document.body.addEventListener("click", () => {
-    musicPlayer.play().catch(e => console.warn("Autoplay blocked"));
-  }, { once: true });
-
-  // 5. Quotes
-  const quotes = [
-    "‘XO Kitty changed my life ngl’",
-    "‘K-pop is a lifestyle’",
-    "‘Curry chawal is a love language’",
-    "‘Still vibing to Lana & Kendrick’",
-    "‘Cookies & cream or nothing.’"
-  ];
-  function updateQuote() {
-    const random = quotes[Math.floor(Math.random() * quotes.length)];
-    falakQuote.innerText = random;
-  }
-  setInterval(updateQuote, 4000);
-  updateQuote();
-
-  // 6. Bubble click
-  if (bubble) {
-    bubble.addEventListener("click", () => {
-      bubble.innerText = '😎 ok now scroll';
-      bubble.style.backgroundColor = '#ffc0cb';
-    });
+  if (diff <= 0) {
+    document.getElementById("timer").textContent = "🎉 It's her birthday today!!";
+    return;
   }
 
-  // 7. Dark mode toggle
-  if (darkBtn) {
-    darkBtn.addEventListener("click", () => {
-      document.body.classList.toggle("dark-mode");
-    });
-  }
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const minutes = Math.floor((diff / (1000 * 60)) % 60);
+  const seconds = Math.floor((diff / 1000) % 60);
 
-  // 8. Falling bows
-  const totalBows = 15;
-  for (let i = 0; i < totalBows; i++) {
-    const bow = document.createElement('img');
-    bow.src = 'bow.png';
-    bow.className = 'falling-bow';
-    bow.style.left = `${Math.random() * 100}vw`;
-    bow.style.animationDuration = `${Math.random() * 5 + 5}s`;
-    bow.style.animationDelay = `${Math.random() * 3}s`;
-    document.body.appendChild(bow);
-  }
+  document.getElementById("timer").textContent =
+    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
 
-  // 9. Click pop sound
-  const clickSound = new Audio("click.mp3");
-  document.addEventListener("click", () => {
-    clickSound.play().catch(() => {});
-  });
 
-  // 10. Confess popup toggle
-  if (confessBtn && confessNote) {
-    confessBtn.addEventListener("click", () => {
-      confessNote.style.display = confessNote.style.display === "block" ? "none" : "block";
-    });
+// ========== MUSIC PLAYER ==========
+const musicPlayer = document.getElementById("musicPlayer");
+const songSelect = document.getElementById("songSelect");
+const playPauseBtn = document.getElementById("playPauseBtn");
+const nowPlaying = document.getElementById("nowPlaying");
+
+songSelect.addEventListener("change", () => {
+  musicPlayer.src = songSelect.value;
+  musicPlayer.play();
+  nowPlaying.textContent = "Now playing: " + songSelect.options[songSelect.selectedIndex].text;
+  playPauseBtn.textContent = "⏸ Pause";
+});
+
+playPauseBtn.addEventListener("click", () => {
+  if (musicPlayer.paused) {
+    musicPlayer.play();
+    playPauseBtn.textContent = "⏸ Pause";
+  } else {
+    musicPlayer.pause();
+    playPauseBtn.textContent = "▶️ Play";
   }
 });
+
+
+// ========== DARK MODE TOGGLE ==========
+function toggleDarkMode() {
+  document.body.classList.toggle("dark-mode");
+}
+// wire this to a button using: onclick="toggleDarkMode()"
+
+
+// ========== RAINING BOWS ==========
+function createBow() {
+  const bow = document.createElement("img");
+  bow.src = "bow.png"; // make sure bow.png exists
+  bow.classList.add("falling-bow");
+  bow.style.left = `${Math.random() * 100}vw`;
+  bow.style.animationDuration = `${3 + Math.random() * 3}s`;
+  document.body.appendChild(bow);
+  setTimeout(() => bow.remove(), 6000);
+}
+setInterval(createBow, 500);
+
+
+// ========== FALAK QUOTES ==========
+const falakQuotes = [
+  "“I'm literally so done.” — Falak, 2023",
+  "“It's giving ✨main character✨.”",
+  "“Curry chawal is life. Period.”",
+  "“Math? Never heard of her.”",
+  "“If I say ily, I mean it. Unless I don’t.”",
+  "“Let me cry to Lana in peace.”",
+  "“I literally carried that football match.”",
+];
+const falakQuote = document.getElementById("falakQuote");
+falakQuote.textContent = falakQuotes[Math.floor(Math.random() * falakQuotes.length)];
