@@ -7,18 +7,24 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <!-- Theme Toggle Button -->
+  <button id="themeToggle" class="glow-button" style="position: fixed; top: 20px; right: 20px; z-index: 999;">
+    🌙 Toggle Theme
+  </button>
+
+  <!-- Raining Bows -->
+  <script>
+    for (let i = 0; i < 30; i++) {
+      const bow = document.createElement('img');
+      bow.src = 'bow-cursor.png';
+      bow.className = 'falling-bow';
+      bow.style.left = Math.random() * 100 + 'vw';
+      bow.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      document.body.appendChild(bow);
+    }
+  </script>
 
   <div class="chopped-note">you are so chopped bro</div>
-
-  <!-- DARK MODE TOGGLE -->
-  <button id="darkToggle" class="glow-button" style="position: fixed; top: 20px; right: 20px; z-index: 999;">🌙</button>
-
-  <!-- BUBBLE -->
-  <div id="messageBubble" class="pop-bubble">sup bitch</div>
-
-  <!-- CONFESS BUTTON + POPUP -->
-  <button id="confessBtn" class="confess-button">+</button>
-  <div id="confessNote" class="confess-popup">Secret confession: You’re so chopped</div>
 
   <div class="container">
     <h1 class="typewriter" id="typedText"></h1>
@@ -45,13 +51,76 @@
     <p class="now-playing-text" id="nowPlaying">Now playing: Apocalypse — CAS</p>
     <p id="falakQuote" class="quote-box">Loading Falak’s quotes...</p>
 
-    <!-- rest of your content stays the same (already perfect) -->
-    <!-- chick-cards, bio, diary etc -->
+    <!-- Other content like chick-cards, bio-card, rating, polaroid-diary, etc. -->
 
-    <!-- just ending container here -->
   </div>
 
-  <!-- SCRIPTS AT THE BOTTOM -->
-  <script src="script.js"></script>
+  <!-- Scripts -->
+  <script>
+    // === MUSIC ===
+    const musicPlayer = document.getElementById("musicPlayer");
+    const playPauseBtn = document.getElementById("playPauseBtn");
+    const songSelect = document.getElementById("songSelect");
+    const nowPlaying = document.getElementById("nowPlaying");
+
+    let isPlaying = true;
+
+    playPauseBtn.addEventListener("click", () => {
+      if (isPlaying) {
+        musicPlayer.pause();
+        playPauseBtn.textContent = "▶️ Play";
+      } else {
+        musicPlayer.play();
+        playPauseBtn.textContent = "⏸ Pause";
+      }
+      isPlaying = !isPlaying;
+    });
+
+    songSelect.addEventListener("change", () => {
+      const selectedSong = songSelect.value;
+      musicPlayer.src = selectedSong;
+      musicPlayer.play();
+      isPlaying = true;
+      playPauseBtn.textContent = "⏸ Pause";
+      nowPlaying.textContent = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
+    });
+
+    // === THEME TOGGLE ===
+    const themeToggle = document.getElementById("themeToggle");
+    themeToggle.addEventListener("click", () => {
+      document.body.classList.toggle("dark-mode");
+    });
+
+    // === TYPEWRITER ===
+    const typedText = document.getElementById("typedText");
+    const message = "Happy Birthday Falak! ✨ You're the drama AND the main character.";
+    let index = 0;
+    function typeWriter() {
+      if (index < message.length) {
+        typedText.textContent += message.charAt(index);
+        index++;
+        setTimeout(typeWriter, 70);
+      }
+    }
+    typeWriter();
+
+    // === COUNTDOWN ===
+    const countdown = document.getElementById("timer");
+    const birthday = new Date("2026-01-16T00:00:00").getTime();
+
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const gap = birthday - now;
+
+      const days = Math.floor(gap / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((gap % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((gap % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((gap % (1000 * 60)) / 1000);
+
+      countdown.textContent = `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 </body>
 </html>
