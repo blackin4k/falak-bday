@@ -1,5 +1,3 @@
-// script.js
-
 document.addEventListener('DOMContentLoaded', () => {
   const birthday = new Date("2026-01-15T00:00:00").getTime();
   const timerElement = document.getElementById("timer");
@@ -13,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const confessBtn = document.getElementById("confessBtn");
   const confessNote = document.getElementById("confessNote");
 
-  // Countdown
+  // 1. Countdown Timer
   function updateCountdown() {
     const now = new Date().getTime();
     const distance = birthday - now;
@@ -26,30 +24,32 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateCountdown, 1000);
   updateCountdown();
 
-  // Song selector
-  if (songSelect) {
-    songSelect.addEventListener("change", () => {
-      const selectedSong = songSelect.value;
-      musicPlayer.src = selectedSong;
-      musicPlayer.play();
-      nowPlaying.innerText = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
-    });
-  }
+  // 2. Song Selector
+  songSelect.addEventListener("change", () => {
+    const selectedSong = songSelect.value;
+    musicPlayer.src = selectedSong;
+    musicPlayer.play().catch(e => console.warn("Playback failed", e));
+    nowPlaying.innerText = `Now playing: ${songSelect.options[songSelect.selectedIndex].text}`;
+    playPauseBtn.innerText = "⏸ Pause";
+  });
 
-  // Play/Pause toggle
-  if (playPauseBtn) {
-    playPauseBtn.addEventListener("click", () => {
-      if (musicPlayer.paused) {
-        musicPlayer.play();
-        playPauseBtn.innerText = "⏸ Pause";
-      } else {
-        musicPlayer.pause();
-        playPauseBtn.innerText = "▶ Play";
-      }
-    });
-  }
+  // 3. Play/Pause Toggle
+  playPauseBtn.addEventListener("click", () => {
+    if (musicPlayer.paused) {
+      musicPlayer.play().catch(e => console.warn("Playback failed", e));
+      playPauseBtn.innerText = "⏸ Pause";
+    } else {
+      musicPlayer.pause();
+      playPauseBtn.innerText = "▶ Play";
+    }
+  });
 
-  // Quote generator
+  // 4. Autoplay Fix
+  document.body.addEventListener("click", () => {
+    musicPlayer.play().catch(e => console.warn("Autoplay blocked"));
+  }, { once: true });
+
+  // 5. Quotes
   const quotes = [
     "‘XO Kitty changed my life ngl’",
     "‘K-pop is a lifestyle’",
@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateQuote, 4000);
   updateQuote();
 
-  // Sup bitch bubble
+  // 6. Bubble click
   if (bubble) {
     bubble.addEventListener("click", () => {
       bubble.innerText = '😎 ok now scroll';
@@ -72,21 +72,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // Dark mode toggle
+  // 7. Dark mode toggle
   if (darkBtn) {
     darkBtn.addEventListener("click", () => {
       document.body.classList.toggle("dark-mode");
     });
   }
 
-  // Confess button toggle
-  if (confessBtn && confessNote) {
-    confessBtn.addEventListener("click", () => {
-      confessNote.style.display = confessNote.style.display === "block" ? "none" : "block";
-    });
-  }
-
-  // Falling bows
+  // 8. Falling bows
   const totalBows = 15;
   for (let i = 0; i < totalBows; i++) {
     const bow = document.createElement('img');
@@ -98,9 +91,16 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(bow);
   }
 
-  // Click sound (optional)
+  // 9. Click pop sound
   const clickSound = new Audio("click.mp3");
   document.addEventListener("click", () => {
-    clickSound.play();
+    clickSound.play().catch(() => {});
   });
+
+  // 10. Confess popup toggle
+  if (confessBtn && confessNote) {
+    confessBtn.addEventListener("click", () => {
+      confessNote.style.display = confessNote.style.display === "block" ? "none" : "block";
+    });
+  }
 });
