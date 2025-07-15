@@ -1,10 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
   const typedText = document.getElementById("typedText");
   const texts = [
-    "Happy early birthday Falak! 🩷",
-    "You’re iconic. You’re dramatic. You’re unstoppable.",
-    "XO Kitty has nothing on you.",
-    "Hope your day is as chaotic and cute as you."
+    " 'Happy early birthday Falak!' 🩷",
+    "'You’re iconic. You’re dramatic. You’re unstoppable.'",
+    "'XO Kitty has nothing on you!'",
+    "'Hope your day is as chaotic and cute as you.'"
   ];
   let i = 0, j = 0, currentText = "", isDeleting = false;
 
@@ -77,7 +77,14 @@ document.addEventListener("DOMContentLoaded", () => {
     "Sleep is for the weak, and I am very weak 😴"
   ];
   const falakQuoteEl = document.getElementById("falakQuote");
-  falakQuoteEl.textContent = falakQuotes[Math.floor(Math.random() * falakQuotes.length)];
+
+  function rotateQuote() {
+    const quote = falakQuotes[Math.floor(Math.random() * falakQuotes.length)];
+    falakQuoteEl.textContent = quote;
+  }
+
+  rotateQuote();
+  setInterval(rotateQuote, 8000);
 
   // Falling bows
   function createBow() {
@@ -92,21 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
   setInterval(createBow, 600);
 
   // Theme Toggle
-  const themeToggle = document.createElement("button");
-  themeToggle.id = "themeToggle";
-  themeToggle.innerText = "🌙";
-  themeToggle.style.position = "fixed";
-  themeToggle.style.top = "10px";
-  themeToggle.style.right = "10px";
-  themeToggle.style.zIndex = "1000";
-  themeToggle.style.fontSize = "20px";
-  themeToggle.style.background = "#ffe6f2";
-  themeToggle.style.border = "none";
-  themeToggle.style.borderRadius = "50%";
-  themeToggle.style.padding = "8px";
-  themeToggle.style.cursor = "pointer";
-  document.body.appendChild(themeToggle);
-
+  const themeToggle = document.getElementById("themeToggle");
   themeToggle.addEventListener("click", () => {
     document.body.classList.toggle("dark-mode");
   });
